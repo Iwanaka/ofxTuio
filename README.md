@@ -10,10 +10,10 @@ ofxOsc
 
 ### Examples
 #### client and server
-<img src="images/crousel.gif" width="612px">
+<img src="images/client_server.gif" width="612px">
 
 #### tuio simulator
-<img src="images/crousel.gif" width="450px">
+<img src="images/simulator.gif" width="450px">
 
 ### Getting Started
 
