@@ -20,37 +20,41 @@ bool InRectCheck(ofRectangle rect, float x, float y) {
 }
 
 //--------------------------------------------------------------
-ofxTuioSender::ofxTuioSender() :
+ofxTuioSender::ofxTuioSender():
 	isRun(false),
 	isAutoFit(false),
 	screen(0, 0, ofGetWidth(), ofGetHeight())
-{}
+{
+	tuioServer = nullptr;
+}
 
 //--------------------------------------------------------------
 ofxTuioSender::~ofxTuioSender()
 {
 	activeCursorList.clear();
-	if (tuioServer != nullptr) delete tuioServer;
+	if (tuioServer != nullptr) {
+		delete tuioServer;
+		tuioServer = nullptr;
+	}
 }
 
 //--------------------------------------------------------------
-void ofxTuioSender::setup(ofxTuioProtocol *protocol, string sourceName) {
+void ofxTuioSender::setup(ofxTuioSenderProtcol *protocol, string sourceName) {
 
-	if (tuioServer != nullptr) delete tuioServer;
-
+	ofxTuioSenderProtcol *_protocol = protocol;
 	TuioTime::initSession();
 	frameTime = TuioTime::getSessionTime();
 
-	tuioServer = new TuioServer(protocol);
+	tuioServer = new TuioServer(_protocol);
 	tuioServer->setSourceName(sourceName.c_str());
 	
 }
 
 //--------------------------------------------------------------
-void ofxTuioSender::addProtocol(ofxTuioProtocol *protocol) {
+void ofxTuioSender::addProtocol(ofxTuioSenderProtcol *protocol) {
 
-	if (tuioServer == nullptr) return;
-	ofxTuioProtocol *_p = protocol;
+	if (!tuioServer) return;
+	ofxTuioSenderProtcol *_p = protocol;
 	tuioServer->addOscSender(_p);
 
 }
@@ -58,7 +62,7 @@ void ofxTuioSender::addProtocol(ofxTuioProtocol *protocol) {
 //--------------------------------------------------------------
 void ofxTuioSender::begin() {
 
-	if (!isRun || tuioServer == nullptr) return;
+	if (!isRun || !tuioServer) return;
 	frameTime = TuioTime::getSessionTime();
 	tuioServer->initFrame(frameTime);
 
@@ -67,7 +71,7 @@ void ofxTuioSender::begin() {
 //--------------------------------------------------------------
 void ofxTuioSender::end() {
 
-	if (!isRun || tuioServer == nullptr) return;
+	if (!isRun || !tuioServer) return;
 	tuioServer->stopUntouchedMovingCursors();
 	tuioServer->commitFrame();
 

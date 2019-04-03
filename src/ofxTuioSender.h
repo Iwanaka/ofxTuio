@@ -7,12 +7,12 @@
 
 namespace ofxTuio {
 
-	typedef TUIO::UdpSender ofxTuioOSC;
-	typedef TUIO::WebSockSender ofxTuioWebSocket;
-	typedef TUIO::TcpSender ofxTuioTCP;
-	typedef TUIO::FlashSender ofxTuioFlash;
+	typedef TUIO::UdpSender ofxTuioOscSender;
+	typedef TUIO::WebSockSender ofxTuioWebSocketSender;
+	typedef TUIO::TcpSender ofxTuioTcpSender;
+	typedef TUIO::FlashSender ofxTuioFlashSender;
 
-	typedef TUIO::OscSender ofxTuioProtocol;
+	typedef TUIO::OscSender ofxTuioSenderProtcol;
 
 	class ofxTuioSender
 	{
@@ -20,8 +20,8 @@ namespace ofxTuio {
 		ofxTuioSender();
 		~ofxTuioSender();
 
-		void setup(ofxTuioProtocol *protocol, std::string sourceName);
-		void addProtocol(ofxTuioProtocol *protocol);
+		void setup(ofxTuioSenderProtcol *protocol, std::string sourceName);
+		void addProtocol(ofxTuioSenderProtcol *protocol);
 		void run();
 		void stop();
 		void begin();
