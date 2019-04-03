@@ -1,2 +1,2 @@
 ofxOsc
-ofxTuio11
+ofxTuio
