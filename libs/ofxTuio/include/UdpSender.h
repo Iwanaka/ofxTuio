@@ -26,7 +26,7 @@
 #define MAX_UDP_SIZE 4096
 #define MIN_UDP_SIZE 576
 
-using namespace osc;
+//using namespace osc;
 namespace TUIO {
 	
 	/**
@@ -35,7 +35,7 @@ namespace TUIO {
 	 * @author Martin Kaltenbrunner
 	 * @version 1.1.6
 	 */ 
-	class LIBDECL UdpSender : public OscSender {
+    class LIBDECL UdpSender : public OscSender {
 				
 	public:
 
@@ -88,7 +88,7 @@ namespace TUIO {
 		 const char* tuio_type() { return "TUIO/UDP"; }
 		
 	private:
-		UdpTransmitSocket *socket;
+        osc::UdpTransmitSocket *socket;
 	};
 }
 #endif /* INCLUDED_UDPSENDER_H */

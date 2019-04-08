@@ -19,6 +19,7 @@
 #include "UdpSender.h"
 
 using namespace TUIO;
+using namespace osc;
 
 UdpSender::UdpSender() {
 	try {

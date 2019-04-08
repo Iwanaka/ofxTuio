@@ -40,11 +40,11 @@ void ofApp::draw(){
 	vector<ofVec2f>::iterator it;
 	for (it = cursors.begin(); it != cursors.end(); it++) {
 
-		ofDrawCircle(
-			glm::vec2(
-				sender.getScreen().x + it->x * sender.getScreen().width,
-				sender.getScreen().y + it->y * sender.getScreen().height),
-			20);
+        ofDrawCircle(
+            glm::vec2(
+                sender.getScreen().x + it->x * sender.getScreen().width,
+                sender.getScreen().y + it->y * sender.getScreen().height),
+            20);
 
 	}
 
