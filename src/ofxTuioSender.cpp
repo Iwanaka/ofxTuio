@@ -95,8 +95,8 @@ void ofxTuioSender::addObject(float obj_x, float obj_y) {
 		bool b = InRectCheck(screen, obj_x, obj_y);
 		if (!b) return;
 
-		_x = (obj_x + abs(screen.x)) / screen.width;
-		_y = (obj_y + abs(screen.y)) / screen.height;
+		_x = (obj_x - screen.x) / screen.width;
+		_y = (obj_y - screen.y) / screen.height;
 
 	}
 	else {
@@ -121,8 +121,9 @@ void ofxTuioSender::updateObject(float obj_x, float obj_y) {
 		bool b = InRectCheck(screen, obj_x, obj_y);
 		if (!b) return;
 
-		_x = (obj_x + abs(screen.x)) / screen.width;
-		_y = (obj_y + abs(screen.y)) / screen.height;
+		_x = (obj_x - screen.x) / screen.width;
+		_y = (obj_y - screen.y) / screen.height;
+
 		width = screen.width;
 
 	}
@@ -159,8 +160,8 @@ void ofxTuioSender::removeObject(float obj_x, float obj_y) {
 		bool b = InRectCheck(screen, obj_x, obj_y);
 		if (!b) return;
 
-		_x = (obj_x + abs(screen.x)) / screen.width;
-		_y = (obj_y + abs(screen.y)) / screen.height;
+		_x = (obj_x - screen.x) / screen.width;
+		_y = (obj_y - screen.y) / screen.height;
 		
 	}
 	else {
