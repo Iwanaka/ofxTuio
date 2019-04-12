@@ -22,7 +22,7 @@
 #include "OscReceiver.h"
 #include "ip/UdpSocket.h"
 
-using namespace osc;
+//using namespace osc;
 namespace TUIO {
 	
 	/**
@@ -38,7 +38,7 @@ namespace TUIO {
 		/**
 		 * The UDP socket is only public to be accessible from the thread function
 		 */ 
-		UdpListeningReceiveSocket *socket;
+        osc::UdpListeningReceiveSocket *socket;
 		
 		/**
 		 * This constructor creates a UdpReceiver instance listening to the provided UDP port 

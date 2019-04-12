@@ -19,6 +19,8 @@
 #include "UdpReceiver.h"
 
 using namespace TUIO;
+using namespace osc;
+
 #ifndef WIN32
 static void* ClientThreadFunc( void* obj )
 #else

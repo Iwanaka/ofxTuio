@@ -26,7 +26,7 @@
 #include "ip/PacketListener.h"
 #include "ip/IpEndpointName.h"
 
-using namespace osc;
+//using namespace osc;
 namespace TUIO {
 
 	class TuioClient; // Forward declaration
@@ -37,7 +37,7 @@ namespace TUIO {
 	 * @author Martin Kaltenbrunner
 	 * @version 1.1.6
 	 */ 
-	class LIBDECL OscReceiver: public PacketListener {
+    class LIBDECL OscReceiver: public osc::PacketListener {
 				
 	public:
 
@@ -83,12 +83,12 @@ namespace TUIO {
 		 * @param  size		the size of the received OSC data
 		 * @param  remoteEndpoint	the origin of the received OSC data 
 		 */
-		void ProcessPacket( const char *data, int size, const IpEndpointName &remoteEndpoint ) override;
+        void ProcessPacket( const char *data, int size, const osc::IpEndpointName &remoteEndpoint ) override;
 		
 	protected:
-		void ProcessBundle( const osc::ReceivedBundle& b, const IpEndpointName& remoteEndpoint);
+        void ProcessBundle( const osc::ReceivedBundle& b, const osc::IpEndpointName& remoteEndpoint);
 		
-		void ProcessMessage( const osc::ReceivedMessage& message, const IpEndpointName& remoteEndpoint);
+        void ProcessMessage( const osc::ReceivedMessage& message, const osc::IpEndpointName& remoteEndpoint);
 		
 		std::list<TuioClient*> clientList;
 		bool connected;
