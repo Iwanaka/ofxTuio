@@ -7,6 +7,9 @@ void ofApp::setup(){
 
 	//setup port
 	tuio.setup(new ofxTuioUdpReceiver(3333));
+	//or tcp...
+	//tuio.setup(new ofxTuioTcpReceiver(3333));
+	
 
 	//add event
 	ofAddListener(tuio.AddTuioCursor, this, &ofApp::tuioAdded);
@@ -23,11 +26,13 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	vector<cursor>::iterator it;
+	list<cursor*>::iterator it;
 	for (it = cursors.begin(); it != cursors.end(); it++) {
 
-		ofVec2f pos = ofVec2f(it->pos.x * ofGetWidth(), it->pos.y * ofGetHeight());
-		string id = ofToString(it->sessionID);
+		auto c = (*it);
+
+		ofVec2f pos = ofVec2f(c->pos.x * ofGetWidth(), c->pos.y * ofGetHeight());
+		string id = ofToString(c->sessionID);
 
 		ofSetColor(255);
 		ofDrawCircle(pos, 20);
@@ -45,9 +50,9 @@ void ofApp::tuioAdded(ofxTuioCursor &tuioCursor) {
 	long id = tuioCursor.getSessionID();
 	cout << "add " << id << " at " << pos << endl;
 
-	cursor c;
-	c.pos = pos;
-	c.sessionID = id;
+	cursor *c = new cursor();
+	c->pos = pos;
+	c->sessionID = id;
 	cursors.push_back(c);
 
 }
@@ -59,12 +64,13 @@ void ofApp::tuioUpdated(ofxTuioCursor &tuioCursor) {
 	long id = tuioCursor.getSessionID();
 	cout << "update " << id << " at " << pos << endl;
 
-	vector<cursor>::iterator it;
+	list<cursor*>::iterator it;
 	for (it = cursors.begin(); it != cursors.end(); it++) {
-		if (it->sessionID == id) {
-			it->pos = pos;
-			break;
-		}
+		auto _c = (*it);
+		if (_c->sessionID != id) continue;
+		
+		_c->pos = ofVec2f(tuioCursor.getPosition().getX(), tuioCursor.getPosition().getY());
+
 	}
 }
 
@@ -75,11 +81,14 @@ void ofApp::tuioRemoved(ofxTuioCursor &tuioCursor) {
 	long id = tuioCursor.getSessionID();
 	cout << "remove " << id << " at " << pos << endl;
 
-	vector<cursor>::iterator it;
+	cursor *c = nullptr;
+	list<cursor*>::iterator it;
 	for (it = cursors.begin(); it != cursors.end(); it++) {
-		if (it->sessionID == id) {
-			cursors.erase(it);
-			break;
-		}
+		auto _c = (*it);
+		if (_c->sessionID != id) continue;
+		c = _c;
 	}
+
+	cursors.remove(c);
+
 }

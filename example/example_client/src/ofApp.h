@@ -17,7 +17,7 @@ class ofApp : public ofBaseApp{
 			ofVec2f pos;
 			long sessionID;
 		};
-		vector<cursor> cursors;
+		list<cursor*> cursors;
 
 		ofxTuioReceiver tuio;
 
