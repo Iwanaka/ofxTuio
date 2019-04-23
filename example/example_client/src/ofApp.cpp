@@ -26,13 +26,11 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	list<cursor*>::iterator it;
-	for (it = cursors.begin(); it != cursors.end(); it++) {
+	vector<cursor> c = cursors;
+	for (int i = 0; i < c.size(); i++) {
 
-		auto c = (*it);
-
-		ofVec2f pos = ofVec2f(c->pos.x * ofGetWidth(), c->pos.y * ofGetHeight());
-		string id = ofToString(c->sessionID);
+		ofVec2f pos = ofVec2f(c[i].pos.x * ofGetWidth(), c[i].pos.y * ofGetHeight());
+		string id = ofToString(c[i].sessionID);
 
 		ofSetColor(255);
 		ofDrawCircle(pos, 20);
@@ -50,9 +48,9 @@ void ofApp::tuioAdded(ofxTuioCursor &tuioCursor) {
 	long id = tuioCursor.getSessionID();
 	cout << "add " << id << " at " << pos << endl;
 
-	cursor *c = new cursor();
-	c->pos = pos;
-	c->sessionID = id;
+	cursor c;
+	c.pos = pos;
+	c.sessionID = id;
 	cursors.push_back(c);
 
 }
@@ -64,14 +62,12 @@ void ofApp::tuioUpdated(ofxTuioCursor &tuioCursor) {
 	long id = tuioCursor.getSessionID();
 	cout << "update " << id << " at " << pos << endl;
 
-	list<cursor*>::iterator it;
-	for (it = cursors.begin(); it != cursors.end(); it++) {
-		auto _c = (*it);
-		if (_c->sessionID != id) continue;
-		
-		_c->pos = ofVec2f(tuioCursor.getPosition().getX(), tuioCursor.getPosition().getY());
-
+	vector<cursor> c = cursors;
+	for (int i = 0; i < c.size(); i++) {
+		if (c[i].sessionID != id) continue;
+		c[i].pos = ofVec2f(tuioCursor.getPosition().getX(), tuioCursor.getPosition().getY());
 	}
+	cursors = c;
 }
 
 //--------------------------------------------------------------
@@ -81,14 +77,13 @@ void ofApp::tuioRemoved(ofxTuioCursor &tuioCursor) {
 	long id = tuioCursor.getSessionID();
 	cout << "remove " << id << " at " << pos << endl;
 
-	cursor *c = nullptr;
-	list<cursor*>::iterator it;
-	for (it = cursors.begin(); it != cursors.end(); it++) {
-		auto _c = (*it);
-		if (_c->sessionID != id) continue;
-		c = _c;
+	vector<cursor> c = cursors;
+	for (int i = 0; i < c.size(); i++) {
+		if (c[i].sessionID != id) continue;
+		c.erase(c.begin() + i);
+		break;
 	}
 
-	cursors.remove(c);
+	cursors = c;
 
 }
